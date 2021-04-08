@@ -61,7 +61,9 @@
 
               <v-stepper-content step="3">
                 <h3 class="mb-3"> Preview </h3>
-                <DashboardCard :cardData='$store.state.createCardData' />
+                <DashboardCard
+                  :cardData='$store.state.createCardData'
+                  :previewOnly='true' />
                 <div class="d-flex justify-center mt-3">
                   <v-btn
                     color="danger"
@@ -95,7 +97,6 @@ export default {
   },
   data () {
     return {
-      dialogState: false,
       step: 1,
       cardTypeList: Object.values(CARD_TYPES),
       cardTypes: CARD_TYPES,
@@ -107,6 +108,14 @@ export default {
     }
   },
   computed: {
+    dialogState: {
+      get () {
+        return this.$store.state.editDialogToggle
+      },
+      set (bToggle) {
+        this.$store.dispatch('setEditDialogToggle', bToggle)
+      }
+    },
     cardTitle: {
       get () {
         return this.$store.state.createCardData.title
@@ -158,6 +167,7 @@ export default {
      */
     resetCreateCardData () {
       this.$store.dispatch('setCreateCardData', { ...DEFAULT_CARD_DATA })
+      this.$store.dispatch('setCardIdToEdit', null)
       this.dialogState = false
       this.step = 1
     },
@@ -169,12 +179,27 @@ export default {
       const sCurrentRoute = this.$route.path
       aDashboardData = _.map(aDashboardData, (oValue) => {
         if (sCurrentRoute === oValue.path) {
-          oValue.cards.push({
-            title: this.cardTitle,
-            subtitle: this.cardSubtitle,
-            type: this.cardType,
-            content: this.cardContent
-          })
+          if (this.$store.state.cardIdToEdit === null) {
+            oValue.cards.push({
+              title: this.cardTitle,
+              subtitle: this.cardSubtitle,
+              type: this.cardType,
+              content: this.cardContent,
+              id: oValue.cards.length + 1
+            })
+          } else {
+            oValue.cards = _.map(oValue.cards, (oCard) => {
+              if (this.$store.state.cardIdToEdit === oCard.id) {
+                oCard = {
+                  title: this.cardTitle,
+                  subtitle: this.cardSubtitle,
+                  type: this.cardType,
+                  content: this.cardContent
+                }
+              }
+              return oCard
+            })
+          }
         }
         return oValue
       })

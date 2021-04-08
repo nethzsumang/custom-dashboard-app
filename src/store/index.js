@@ -8,7 +8,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     data: loadInitialData(),
-    createCardData: { ...DEFAULT_CARD_DATA }
+    createCardData: { ...DEFAULT_CARD_DATA },
+    editCardToggle: false,
+    cardIdToEdit: null,
+    editDialogToggle: false
   },
   mutations: {
     setDashboardData (state, oData) {
@@ -16,6 +19,15 @@ export default new Vuex.Store({
     },
     setCreateCardData (state, oData) {
       Vue.set(state, 'createCardData', oData)
+    },
+    setEditCardToggle (state, bToggle) {
+      this.state.editCardToggle = bToggle
+    },
+    setCardIdToEdit (state, mId) {
+      this.state.cardIdToEdit = mId
+    },
+    setEditDialogToggle (state, bToggle) {
+      this.state.editDialogToggle = bToggle
     }
   },
   actions: {
@@ -24,6 +36,15 @@ export default new Vuex.Store({
     },
     setCreateCardData ({ commit }, oData) {
       commit('setCreateCardData', oData)
+    },
+    setEditCardToggle ({ commit }, bToggle) {
+      commit('setEditCardToggle', bToggle)
+    },
+    setCardIdToEdit ({ commit }, mId) {
+      commit('setCardIdToEdit', mId)
+    },
+    setEditDialogToggle ({ commit }, bToggle) {
+      commit('setEditDialogToggle', bToggle)
     }
   },
   modules: {

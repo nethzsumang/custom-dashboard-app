@@ -19,7 +19,8 @@ const DEFAULT_INITIAL_DASHBOARD_DATA = [
         title: 'Test Card',
         subtitle: 'Subtitle',
         type: CARD_TYPES.CUSTOM,
-        content: 'Lorem ipsum dolor sit amet consectetur elit adespescing elit.'
+        content: 'Lorem ipsum dolor sit amet consectetur elit adespescing elit.',
+        id: 1
       }
     ]
   }
@@ -29,6 +30,7 @@ const DEFAULT_INITIAL_DASHBOARD_DATA = [
  * Default Card Data
  */
 const DEFAULT_CARD_DATA = {
+  id: null,
   title: '',
   subtitle: '',
   type: CARD_TYPES.CUSTOM,

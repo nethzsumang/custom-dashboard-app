@@ -12,6 +12,10 @@
                 v-for="item in $router.options.routes"
                 :key="item.path"
                 link >
+                <v-list-item-icon>
+                    <v-icon>mdi-newspaper</v-icon>
+                </v-list-item-icon>
+
                 <v-list-item-content>
                     <v-list-item-title>{{ item.name + ' Page' }}</v-list-item-title>
                 </v-list-item-content>
@@ -19,7 +23,17 @@
         </v-navigation-drawer>
 
         <v-app-bar app color="primary">
-            <v-toolbar-title>{{ $route.name }}</v-toolbar-title>
+            <v-toolbar-title>{{ $route.name + ' Dashboard'}}</v-toolbar-title>
+
+            <v-spacer></v-spacer>
+
+            <v-btn
+                v-if="$store.state.editCardToggle"
+                elevation="0"
+                color="accent"
+                @click="handleDoneEditingClick">
+                DONE EDITING
+            </v-btn>
         </v-app-bar>
 
         <!-- Sizes your content based upon application components -->
@@ -41,7 +55,16 @@
 
 <script>
 export default {
-  name: 'DashboardApplication'
+  name: 'DashboardApplication',
+  methods: {
+    /**
+     * Handles done editing click event
+     */
+    handleDoneEditingClick () {
+      this.$store.dispatch('setEditCardToggle', false)
+      this.$store.dispatch('setCardIdToEdit', null)
+    }
+  }
 }
 </script>
 
