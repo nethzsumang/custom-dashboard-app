@@ -37,9 +37,20 @@ const DEFAULT_CARD_DATA = {
   content: ''
 }
 
+/**
+ * Default Dashboard Data
+ */
+const DEFAULT_DASHBOARD_DATA = {
+  id: null,
+  path: '',
+  name: '',
+  cards: []
+}
+
 export {
   LOCAL_STORAGE_DASHBOARD_DATA_KEY,
   CARD_TYPES,
   DEFAULT_INITIAL_DASHBOARD_DATA,
-  DEFAULT_CARD_DATA
+  DEFAULT_CARD_DATA,
+  DEFAULT_DASHBOARD_DATA
 }

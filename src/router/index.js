@@ -14,6 +14,8 @@ const routes = _.map(store.state.data, (oValue) => {
   }
 })
 
+store.dispatch('setRoutes', routes)
+
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,

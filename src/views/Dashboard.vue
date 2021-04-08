@@ -1,6 +1,22 @@
 <template>
   <div>
     <v-container fluid>
+      <div
+        v-if="oDashboardData.cards.length === 0"
+        class="d-flex justify-center">
+        <v-container fluid>
+          <v-row>
+            <v-col>
+              <div class="text-center">Feels lonely in here...</div>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <div class="text-center">Please click the button below to Add a new Card here.</div>
+            </v-col>
+          </v-row>
+        </v-container>
+      </div>
       <v-row v-for="card in oDashboardData.cards"
         :key="card.name">
         <v-col>
@@ -88,6 +104,14 @@ export default {
       speedDial: false
     }
   },
+  watch: {
+    $route: {
+      handler: function (newValue) {
+        this.oDashboardData = this.getDashboardData()
+      },
+      deep: true
+    }
+  },
   created () {
     this.oDashboardData = this.getDashboardData()
   },
@@ -98,7 +122,9 @@ export default {
      */
     getDashboardData () {
       const aDashboardData = this.$store.state.data
-      return _.find(aDashboardData, { path: this.$route.path })
+      return _.find(aDashboardData, (oValue) => {
+        return oValue.path === this.$route.path
+      })
     },
     /**
      * Save dashboard data

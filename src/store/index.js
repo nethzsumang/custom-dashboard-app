@@ -1,24 +1,33 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { loadInitialData } from '../libraries/dashboard-data'
-import { DEFAULT_CARD_DATA } from '../constants/app-constants'
+import { DEFAULT_CARD_DATA, DEFAULT_DASHBOARD_DATA } from '../constants/app-constants'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    routes: [],
     data: loadInitialData(),
     createCardData: { ...DEFAULT_CARD_DATA },
+    createDashboardData: { ...DEFAULT_DASHBOARD_DATA },
     editCardToggle: false,
     cardIdToEdit: null,
-    editDialogToggle: false
+    editDialogToggle: false,
+    editDashboardDialogToggle: false
   },
   mutations: {
+    setRoutes (state, aRoutes) {
+      Vue.set(state, 'routes', aRoutes)
+    },
     setDashboardData (state, oData) {
       Vue.set(state, 'data', oData)
     },
     setCreateCardData (state, oData) {
       Vue.set(state, 'createCardData', oData)
+    },
+    setCreateDashboardData (state, oData) {
+      Vue.set(state, 'createDashboardData', oData)
     },
     setEditCardToggle (state, bToggle) {
       this.state.editCardToggle = bToggle
@@ -28,14 +37,23 @@ export default new Vuex.Store({
     },
     setEditDialogToggle (state, bToggle) {
       this.state.editDialogToggle = bToggle
+    },
+    setEditDashboardDialogToggle (state, bToggle) {
+      this.state.editDashboardDialogToggle = bToggle
     }
   },
   actions: {
+    setRoutes ({ commit }, aRoutes) {
+      commit('setRoutes', aRoutes)
+    },
     setDashboardData ({ commit }, oData) {
       commit('setDashboardData', oData)
     },
     setCreateCardData ({ commit }, oData) {
       commit('setCreateCardData', oData)
+    },
+    setCreateDashboardData ({ commit }, oData) {
+      commit('setCreateDashboardData', oData)
     },
     setEditCardToggle ({ commit }, bToggle) {
       commit('setEditCardToggle', bToggle)
@@ -45,6 +63,9 @@ export default new Vuex.Store({
     },
     setEditDialogToggle ({ commit }, bToggle) {
       commit('setEditDialogToggle', bToggle)
+    },
+    setEditDashboardDialogToggle ({ commit }, bToggle) {
+      commit('setEditDashboardDialogToggle', bToggle)
     }
   },
   modules: {
