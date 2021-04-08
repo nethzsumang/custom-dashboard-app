@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1> Hello World </h1>
     <v-container fluid>
       <v-row v-for="card in oDashboardData.cards"
         :key="card.name">
@@ -35,6 +34,14 @@
           </v-icon>
         </v-btn>
       </template>
+
+      <v-btn
+        fab
+        dark
+        color="secondary"
+        @click="editCards">
+        <v-icon>mdi-square-edit-outline</v-icon>
+      </v-btn>
 
       <v-btn
         fab
@@ -133,6 +140,9 @@ export default {
           })
         }
       })
+    },
+    editCards () {
+      this.$store.dispatch('setEditCardToggle', true)
     }
   }
 }
