@@ -104,6 +104,14 @@ export default {
       speedDial: false
     }
   },
+  watch: {
+    $route: {
+      handler: function (newValue) {
+        this.oDashboardData = this.getDashboardData()
+      },
+      deep: true
+    }
+  },
   created () {
     this.oDashboardData = this.getDashboardData()
   },
@@ -114,7 +122,9 @@ export default {
      */
     getDashboardData () {
       const aDashboardData = this.$store.state.data
-      return _.find(aDashboardData, { path: this.$route.path })
+      return _.find(aDashboardData, (oValue) => {
+        return oValue.path === this.$route.path
+      })
     },
     /**
      * Save dashboard data

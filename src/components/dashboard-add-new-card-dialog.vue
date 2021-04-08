@@ -175,7 +175,7 @@ export default {
      * Save create card data
      */
     saveCreateCardData () {
-      let aDashboardData = { ...this.$store.state.data }
+      let aDashboardData = [...this.$store.state.data]
       const sCurrentRoute = this.$route.path
       aDashboardData = _.map(aDashboardData, (oValue) => {
         if (sCurrentRoute === oValue.path) {

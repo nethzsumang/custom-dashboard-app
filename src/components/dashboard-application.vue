@@ -9,8 +9,9 @@
                 </v-list-item-content>
             </v-list-item>
             <v-list-item
-                v-for="item in $router.options.routes"
+                v-for="item in $store.state.routes"
                 :key="item.path"
+                :to="item.path"
                 link >
                 <v-list-item-icon>
                     <v-icon>mdi-newspaper</v-icon>
@@ -20,6 +21,11 @@
                     <v-list-item-title>{{ item.name + ' Page' }}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
+            <template v-slot:append>
+                <div class="pa-2">
+                    <DashboardAddNewDialog />
+                </div>
+            </template>
         </v-navigation-drawer>
 
         <v-app-bar app color="primary">
@@ -54,8 +60,13 @@
 </template>
 
 <script>
+import DashboardAddNewDialog from './dashboard-add-new-dialog'
+
 export default {
   name: 'DashboardApplication',
+  components: {
+    DashboardAddNewDialog
+  },
   methods: {
     /**
      * Handles done editing click event
