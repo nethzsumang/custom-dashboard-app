@@ -1,6 +1,22 @@
 <template>
   <div>
     <v-container fluid>
+      <div
+        v-if="oDashboardData.cards.length === 0"
+        class="d-flex justify-center">
+        <v-container fluid>
+          <v-row>
+            <v-col>
+              <div class="text-center">Feels lonely in here...</div>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <div class="text-center">Please click the button below to Add a new Card here.</div>
+            </v-col>
+          </v-row>
+        </v-container>
+      </div>
       <v-row v-for="card in oDashboardData.cards"
         :key="card.name">
         <v-col>
