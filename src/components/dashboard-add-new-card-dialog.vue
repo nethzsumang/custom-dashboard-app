@@ -53,10 +53,8 @@
               </v-stepper-content>
 
               <v-stepper-content step="2">
-                <div v-if="cardType === cardTypes.CUSTOM">
-                  <h3 class="mb-3"> Custom Card Content </h3>
-                  <vue-editor v-model="cardContent" :editorToolbar='editorToolbar' />
-                </div>
+                <CardDetailsCustom v-if="cardType === cardTypes.CUSTOM" />
+                <CardDetailsWeather v-if="cardType === cardTypes.WEATHER" />
               </v-stepper-content>
 
               <v-stepper-content step="3">
@@ -88,23 +86,22 @@
 <script>
 import { CARD_TYPES, DEFAULT_CARD_DATA } from '../constants/app-constants'
 import DashboardCard from '../components/dashboard-card'
+import CardDetailsCustom from './details-content/card-details-custom'
+import CardDetailsWeather from './details-content/card-details-weather'
 import _ from 'lodash'
 
 export default {
   name: 'DashboardAddNewCardDialog',
   components: {
-    DashboardCard
+    DashboardCard,
+    CardDetailsCustom,
+    CardDetailsWeather
   },
   data () {
     return {
       step: 1,
       cardTypeList: Object.values(CARD_TYPES),
-      cardTypes: CARD_TYPES,
-      editorToolbar: [
-        ['bold', 'italic', 'underline'],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-        [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }]
-      ]
+      cardTypes: CARD_TYPES
     }
   },
   computed: {
@@ -148,17 +145,6 @@ export default {
           type: sType
         })
       }
-    },
-    cardContent: {
-      get () {
-        return this.$store.state.createCardData.content
-      },
-      set (sContent) {
-        this.$store.dispatch('setCreateCardData', {
-          ...this.$store.state.createCardData,
-          content: sContent
-        })
-      }
     }
   },
   methods: {
@@ -184,8 +170,9 @@ export default {
               title: this.cardTitle,
               subtitle: this.cardSubtitle,
               type: this.cardType,
-              content: this.cardContent,
-              id: oValue.cards.length + 1
+              content: this.$store.state.createCardData.content,
+              id: oValue.cards.length + 1,
+              dataSource: this.$store.state.createCardData.dataSource
             })
           } else {
             oValue.cards = _.map(oValue.cards, (oCard) => {
@@ -194,7 +181,8 @@ export default {
                   title: this.cardTitle,
                   subtitle: this.cardSubtitle,
                   type: this.cardType,
-                  content: this.cardContent
+                  content: this.cardContent,
+                  dataSource: this.$store.state.createCardData.dataSource
                 }
               }
               return oCard
