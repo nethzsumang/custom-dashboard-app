@@ -100,12 +100,12 @@ export default {
       const aDashboardData = [...this.$store.state.data]
       const aData = {
         id: aDashboardData.length + 1,
-        path: this.dashboardPath,
+        path: (this.dashboardPath[0] !== '/') ? '/' + this.dashboardPath : this.dashboardPath,
         name: this.dashboardName,
         cards: []
       }
       const oRoute = {
-        path: (aData.path[0] !== '/') ? '/' + aData.path : aData.path,
+        path: aData.path,
         name: aData.name,
         component: Dashboard
       }

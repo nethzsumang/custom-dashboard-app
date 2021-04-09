@@ -107,23 +107,23 @@ export default {
   watch: {
     $route: {
       handler: function (newValue) {
-        this.oDashboardData = this.getDashboardData()
+        this.oDashboardData = this.getDashboardData(newValue)
       },
       deep: true
     }
   },
   created () {
-    this.oDashboardData = this.getDashboardData()
+    this.oDashboardData = this.getDashboardData(this.$route)
   },
   methods: {
     /**
      * Gets dashboard data
      * @return object
      */
-    getDashboardData () {
+    getDashboardData (oRoute) {
       const aDashboardData = this.$store.state.data
       return _.find(aDashboardData, (oValue) => {
-        return oValue.path === this.$route.path
+        return oValue.path === oRoute.path
       })
     },
     /**
