@@ -24,7 +24,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const aRoutePaths = _.map(routes, 'path')
+  const aRoutePaths = _.map(store.state.routes, 'path')
   if (aRoutePaths.includes(to.path) === false) {
     Swal.fire({
       text: 'There is no dashboard with that path.',
