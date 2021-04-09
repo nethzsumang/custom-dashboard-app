@@ -5,7 +5,8 @@ const LOCAL_STORAGE_DASHBOARD_DATA_KEY = 'custom_dashboard/data'
  * Card Types
  */
 const CARD_TYPES = {
-  CUSTOM: 'Custom'
+  CUSTOM: 'Custom',
+  WEATHER: 'Weather'
   // DATA_TABLE: 'Data Table'
 }
 
@@ -20,6 +21,7 @@ const DEFAULT_INITIAL_DASHBOARD_DATA = [
         subtitle: 'Subtitle',
         type: CARD_TYPES.CUSTOM,
         content: 'Lorem ipsum dolor sit amet consectetur elit adespescing elit.',
+        dataSource: {},
         id: 1
       }
     ]
@@ -34,7 +36,8 @@ const DEFAULT_CARD_DATA = {
   title: '',
   subtitle: '',
   type: CARD_TYPES.CUSTOM,
-  content: ''
+  content: '',
+  dataSource: {}
 }
 
 /**

@@ -3,7 +3,8 @@
       <v-card elevation="2">
         <v-card-title>{{ cardData.title }}</v-card-title>
         <v-card-subtitle>{{ cardData.subtitle }}</v-card-subtitle>
-        <v-card-text v-html='cardData.content'></v-card-text>
+        <CardContentCustom v-if="cardData.type === CARD_TYPES.CUSTOM" :cardData="cardData" />
+        <CardContentWeather v-if="cardData.type === CARD_TYPES.WEATHER" :cardData="cardData" />
         <v-card-actions v-if='$store.state.editCardToggle && previewOnly === false'>
           <div class="d-flex justify-center">
             <v-btn
@@ -24,10 +25,17 @@
 </template>
 
 <script>
+import CardContentCustom from './card-types/card-content-custom'
+import CardContentWeather from './card-types/card-content-weather'
+import { CARD_TYPES } from '../constants/app-constants'
 import _ from 'lodash'
 
 export default {
   name: 'DashboardCard',
+  components: {
+    CardContentCustom,
+    CardContentWeather
+  },
   props: {
     cardData: {
       type: Object,
@@ -36,6 +44,11 @@ export default {
     previewOnly: {
       type: Boolean,
       default: () => false
+    }
+  },
+  data () {
+    return {
+      CARD_TYPES: CARD_TYPES
     }
   },
   methods: {
