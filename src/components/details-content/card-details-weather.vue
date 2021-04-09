@@ -1,8 +1,11 @@
 <template>
   <div>
     <v-text-field
+      class="mb-3"
       v-model="url"
-      label="Source URL">
+      label="Source URL"
+      hint="Only 7timer.info and goweather.herokuapp.com is supported as of the moment."
+      persistent-hint>
     </v-text-field>
     <h4> Response Structure </h4>
     <v-text-field

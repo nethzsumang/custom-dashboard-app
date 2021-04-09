@@ -170,8 +170,9 @@ export default {
               title: this.cardTitle,
               subtitle: this.cardSubtitle,
               type: this.cardType,
-              content: this.cardContent,
-              id: oValue.cards.length + 1
+              content: this.$store.state.createCardData.content,
+              id: oValue.cards.length + 1,
+              dataSource: this.$store.state.createCardData.dataSource
             })
           } else {
             oValue.cards = _.map(oValue.cards, (oCard) => {
@@ -180,7 +181,8 @@ export default {
                   title: this.cardTitle,
                   subtitle: this.cardSubtitle,
                   type: this.cardType,
-                  content: this.cardContent
+                  content: this.cardContent,
+                  dataSource: this.$store.state.createCardData.dataSource
                 }
               }
               return oCard
