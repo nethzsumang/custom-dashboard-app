@@ -1,3 +1,7 @@
+### v15
+Changes:
+* Fix path on SPA static serve on server.js.
+
 ### v14
 Changes:
 * Add SPA route in server.js.
