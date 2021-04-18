@@ -21,20 +21,20 @@
           <v-card-text>
             <v-stepper v-model="step">
               <v-stepper-header>
-                <v-stepper-step step="1" editable>
+                <v-stepper-step :step="1" editable>
                   Common Settings
                 </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="2" editable>
+                <v-stepper-step :step="2" editable>
                   Edit Details
                 </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="3" editable>
+                <v-stepper-step :step="3" editable>
                   Preview
                 </v-stepper-step>
               </v-stepper-header>
 
-              <v-stepper-content step="1">
+              <v-stepper-content :step="1">
                 <v-text-field
                   v-model="cardTitle"
                   label="Card Title"
@@ -52,16 +52,17 @@
                 </v-select>
               </v-stepper-content>
 
-              <v-stepper-content step="2">
+              <v-stepper-content :step="2">
                 <CardDetailsCustom v-if="cardType === cardTypes.CUSTOM" />
                 <CardDetailsWeather v-if="cardType === cardTypes.WEATHER" />
               </v-stepper-content>
 
-              <v-stepper-content step="3">
+              <v-stepper-content :step="3">
                 <h3 class="mb-3"> Preview </h3>
                 <DashboardCard
                   :cardData='$store.state.createCardData'
-                  :previewOnly='true' />
+                  :previewOnly='true'
+                  :currentStep='step' />
                 <div class="d-flex justify-center mt-3">
                   <v-btn
                     color="danger"

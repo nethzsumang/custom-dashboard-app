@@ -3,8 +3,14 @@
       <v-card elevation="2">
         <v-card-title>{{ cardData.title }}</v-card-title>
         <v-card-subtitle>{{ cardData.subtitle }}</v-card-subtitle>
-        <CardContentCustom v-if="cardData.type === CARD_TYPES.CUSTOM" :cardData="cardData" />
-        <CardContentWeather v-if="cardData.type === CARD_TYPES.WEATHER" :cardData="cardData" />
+        <CardContentCustom
+          v-if="cardData.type === CARD_TYPES.CUSTOM"
+          :cardData="cardData"
+          :currentStep='currentStep' />
+        <CardContentWeather
+          v-if="cardData.type === CARD_TYPES.WEATHER"
+          :cardData="cardData"
+          :currentStep='currentStep' />
         <v-card-actions v-if='$store.state.editCardToggle && previewOnly === false'>
           <div class="d-flex justify-center">
             <v-btn
@@ -44,6 +50,10 @@ export default {
     previewOnly: {
       type: Boolean,
       default: () => false
+    },
+    currentStep: {
+      type: Number,
+      default: () => -1
     }
   },
   data () {

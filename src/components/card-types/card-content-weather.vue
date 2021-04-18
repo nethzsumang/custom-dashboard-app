@@ -43,6 +43,10 @@ export default {
     cardData: {
       type: Object,
       required: true
+    },
+    currentStep: {
+      type: Number,
+      default: () => -1
     }
   },
   data () {
@@ -66,13 +70,12 @@ export default {
     }
   },
   watch: {
-    cardData: {
-      handler: async function (newValue, oldValue) {
-        if (_.isEqualWith(newValue.dataSource, oldValue.dataSource, this.compareWeatherConfig) === false) {
-          await this.fetchWeatherData(newValue.dataSource)
+    currentStep: {
+      handler: async function (newValue) {
+        if (newValue === 3) {
+          await this.fetchWeatherData(this.cardData.dataSource)
         }
-      },
-      deep: true
+      }
     }
   },
   async mounted () {
@@ -83,13 +86,9 @@ export default {
      * Fetches weather data
      */
     async fetchWeatherData (oDataSource) {
-      if (this.dataFetched === true) {
-        return
-      }
       try {
         const { data } = await axios.get(oDataSource.url)
         this.oWeatherData = data
-        this.dataFetched = true
       } catch (e) { }
     },
     /**
