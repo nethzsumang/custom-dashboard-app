@@ -71,6 +71,14 @@
         fab
         dark
         color="primary"
+        @click='downloadDashboardData'>
+        <v-icon>mdi-download</v-icon>
+      </v-btn>
+
+      <v-btn
+        fab
+        dark
+        color="primary"
         @click='syncToCloud'>
         <v-icon>mdi-cloud-sync</v-icon>
       </v-btn>
@@ -101,13 +109,20 @@ export default {
   data () {
     return {
       oDashboardData: {},
-      speedDial: false
+      speedDial: false,
+      downloadButtonHref: ''
     }
   },
   watch: {
     $route: {
       handler: function (newValue) {
         this.oDashboardData = this.getDashboardData(newValue)
+      },
+      deep: true
+    },
+    '$store.state.data': {
+      handler: function () {
+        this.getHrefDownloadDashboard()
       },
       deep: true
     }
@@ -167,8 +182,21 @@ export default {
         }
       })
     },
+    /**
+     * Sets edit card toggle
+     */
     editCards () {
       this.$store.dispatch('setEditCardToggle', true)
+    },
+    /**
+     * Download dashboard data
+     */
+    downloadDashboardData () {
+      const fileDownload = require('js-file-download')
+      fileDownload(
+        JSON.stringify(this.$store.state.data),
+        'dashboardData.json'
+      )
     }
   }
 }
