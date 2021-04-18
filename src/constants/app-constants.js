@@ -6,7 +6,8 @@ const LOCAL_STORAGE_DASHBOARD_DATA_KEY = 'custom_dashboard/data'
  */
 const CARD_TYPES = {
   CUSTOM: 'Custom',
-  WEATHER: 'Weather'
+  WEATHER: 'Weather',
+  PICTURE_CAROUSEL: 'Picture Carousel'
   // DATA_TABLE: 'Data Table'
 }
 
