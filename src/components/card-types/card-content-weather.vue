@@ -43,6 +43,10 @@ export default {
     cardData: {
       type: Object,
       required: true
+    },
+    currentStep: {
+      type: Number,
+      default: () => -1
     }
   },
   data () {
@@ -66,38 +70,25 @@ export default {
     }
   },
   watch: {
-    cardData: {
-      handler: async function (newValue, oldValue) {
-        if (_.isEqualWith(newValue.dataSource, oldValue.dataSource, this.compareWeatherConfig) === false) {
-          await this.getWeatherData()
+    currentStep: {
+      handler: async function (newValue) {
+        if (newValue === 3) {
+          await this.fetchWeatherData(this.cardData.dataSource)
         }
-      },
-      deep: true
+      }
     }
   },
   async mounted () {
-    await this.getWeatherData()
+    await this.fetchWeatherData(this.cardData.dataSource)
   },
   methods: {
     /**
-     * Gets weather data
-     * @returns object
-     */
-    async getWeatherData () {
-      await this.fetchWeatherData()
-    },
-    /**
      * Fetches weather data
      */
-    async fetchWeatherData () {
-      if (this.dataFetched === true) {
-        return
-      }
-
+    async fetchWeatherData (oDataSource) {
       try {
-        const { data } = await axios.get(this.cardData.dataSource.url)
+        const { data } = await axios.get(oDataSource.url)
         this.oWeatherData = data
-        this.dataFetched = true
       } catch (e) { }
     },
     /**
@@ -107,7 +98,6 @@ export default {
       if (Object.keys(objValue).length !== Object.keys(othValue).length) {
         return false
       }
-
       return _.isEqual(objValue, othValue)
     },
     /**
@@ -122,7 +112,7 @@ export default {
       const aPath = responsePath.split('.')
 
       // default to whole data then iterate through the response path
-      if (this.oWeatherData === null) {
+      if (this.oWeatherData === null || this.oWeatherData === undefined) {
         return 'loading...'
       }
 
