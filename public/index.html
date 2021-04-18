@@ -14,5 +14,10 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script>
+      if (window.location.pathname !== '/') {
+        window.location.href = '/'
+      }
+    </script>
   </body>
 </html>
