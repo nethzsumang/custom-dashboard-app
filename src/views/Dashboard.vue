@@ -67,11 +67,13 @@
         <v-icon>mdi-content-save</v-icon>
       </v-btn>
 
+      <DashboardUploadDialog />
+
       <v-btn
         fab
         dark
         color="primary"
-        @click='downloadDashboardData'>
+        @click='uploadDashboardData'>
         <v-icon>mdi-download</v-icon>
       </v-btn>
 
@@ -98,13 +100,15 @@
 import _ from 'lodash'
 import DashboardCard from '../components/dashboard-card'
 import DashboardAddNewCardDialog from '../components/dashboard-add-new-card-dialog'
+import DashboardUploadDialog from '../components/dashboard-upload-dialog'
 import { saveData, removeDashboardData } from '../libraries/dashboard-data'
 
 export default {
   name: 'Dashboard',
   components: {
     DashboardCard,
-    DashboardAddNewCardDialog
+    DashboardAddNewCardDialog,
+    DashboardUploadDialog
   },
   data () {
     return {
@@ -197,6 +201,12 @@ export default {
         JSON.stringify(this.$store.state.data),
         'dashboardData.json'
       )
+    },
+    /**
+     * Upload Dashboard data
+     */
+    uploadDashboardData () {
+
     }
   }
 }
