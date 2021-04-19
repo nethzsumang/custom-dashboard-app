@@ -1,3 +1,7 @@
+### v16
+Changes:
+* Fix undefined function console error on add new card dialog.
+
 ### v15
 Changes:
 * Fix path on SPA static serve on server.js.
