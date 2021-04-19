@@ -1,3 +1,7 @@
+### v17
+Changes:
+* Add new Datetime card.
+
 ### v16
 Changes:
 * Fix undefined function console error on add new card dialog.

@@ -15,6 +15,10 @@
           v-if="cardData.type === CARD_TYPES.PICTURE_CAROUSEL"
           :cardData="cardData"
           :currentStep="currentStep" />
+        <CardContentDatetime
+          v-if="cardData.type === CARD_TYPES.DATETIME"
+          :cardData="cardData"
+          :currentStep="currentStep" />
         <v-card-actions v-if='$store.state.editCardToggle && previewOnly === false'>
           <div class="d-flex justify-center">
             <v-btn
@@ -38,6 +42,7 @@
 import CardContentCustom from './card-types/card-content-custom'
 import CardContentWeather from './card-types/card-content-weather'
 import CardContentCarousel from './card-types/card-content-carousel'
+import CardContentDatetime from './card-types/card-content-datetime'
 import { CARD_TYPES } from '../constants/app-constants'
 import _ from 'lodash'
 
@@ -46,7 +51,8 @@ export default {
   components: {
     CardContentCustom,
     CardContentWeather,
-    CardContentCarousel
+    CardContentCarousel,
+    CardContentDatetime
   },
   props: {
     cardData: {
