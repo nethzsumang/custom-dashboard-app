@@ -60,11 +60,24 @@ const WEATHER_SOURCES = {
   GOWEATHER: 'GoWeather'
 }
 
+/**
+ * Datetime options
+ */
+const DATETIME_OPTIONS = {
+  TIMEZONES: [
+    'Asia/Manila',
+    'Asia/Seoul',
+    'Asia/Tokyo',
+    'Australia/Sydney'
+  ]
+}
+
 export {
   LOCAL_STORAGE_DASHBOARD_DATA_KEY,
   CARD_TYPES,
   DEFAULT_INITIAL_DASHBOARD_DATA,
   DEFAULT_CARD_DATA,
   DEFAULT_DASHBOARD_DATA,
-  WEATHER_SOURCES
+  WEATHER_SOURCES,
+  DATETIME_OPTIONS
 }
