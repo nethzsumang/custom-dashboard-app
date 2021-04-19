@@ -119,12 +119,6 @@ export default {
         this.oDashboardData = this.getDashboardData(newValue)
       },
       deep: true
-    },
-    '$store.state.data': {
-      handler: function () {
-        this.getHrefDownloadDashboard()
-      },
-      deep: true
     }
   },
   created () {
