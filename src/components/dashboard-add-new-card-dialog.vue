@@ -56,6 +56,7 @@
                 <CardDetailsCustom v-if="cardType === cardTypes.CUSTOM" />
                 <CardDetailsWeather v-if="cardType === cardTypes.WEATHER" />
                 <CardDetailsCarousel v-if="cardType === cardTypes.PICTURE_CAROUSEL" />
+                <CardDetailsDatetime v-if="cardType === cardTypes.DATETIME" />
               </v-stepper-content>
 
               <v-stepper-content :step="3">
@@ -91,6 +92,7 @@ import DashboardCard from '../components/dashboard-card'
 import CardDetailsCustom from './details-content/card-details-custom'
 import CardDetailsWeather from './details-content/card-details-weather'
 import CardDetailsCarousel from './details-content/card-details-carousel'
+import CardDetailsDatetime from './details-content/card-details-datetime'
 import _ from 'lodash'
 
 export default {
@@ -99,7 +101,8 @@ export default {
     DashboardCard,
     CardDetailsCustom,
     CardDetailsWeather,
-    CardDetailsCarousel
+    CardDetailsCarousel,
+    CardDetailsDatetime
   },
   data () {
     return {
