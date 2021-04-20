@@ -163,8 +163,8 @@ export default {
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes',
-        cancelButtonText: 'Cancel'
-      }).then((isConfirmed) => {
+        cancelButtonText: 'No'
+      }).then(({ isConfirmed }) => {
         if (isConfirmed) {
           removeDashboardData()
           this.$swal({
