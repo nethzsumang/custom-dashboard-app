@@ -1,6 +1,10 @@
 <template>
     <v-app>
-        <v-navigation-drawer app permanent>
+        <v-navigation-drawer
+            v-model="expandedDrawer"
+            app
+            temporary
+            bottom>
             <v-list-item>
                 <v-list-item-content>
                 <v-list-item-title class="title">
@@ -29,6 +33,7 @@
         </v-navigation-drawer>
 
         <v-app-bar app color="primary">
+            <v-app-bar-nav-icon @click.stop="expandedDrawer = !expandedDrawer"></v-app-bar-nav-icon>
             <v-toolbar-title>{{ $route.name + ' Dashboard'}}</v-toolbar-title>
 
             <v-spacer></v-spacer>
@@ -66,6 +71,11 @@ export default {
   name: 'DashboardApplication',
   components: {
     DashboardAddNewDialog
+  },
+  data () {
+    return {
+      expandedDrawer: false
+    }
   },
   methods: {
     /**
