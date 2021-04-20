@@ -1,3 +1,7 @@
+### v19
+Changes:
+* Mobile navigation drawer now appears from the bottom.
+
 ### v18
 Changes:
 * Fix clicking cancel on delete dashboard confirmation dialog will still delete the data.
