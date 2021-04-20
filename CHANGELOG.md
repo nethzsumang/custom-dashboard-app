@@ -1,3 +1,7 @@
+### v18
+Changes:
+* Fix clicking cancel on delete dashboard confirmation dialog will still delete the data.
+
 ### v17
 Changes:
 * Add new Datetime card.
