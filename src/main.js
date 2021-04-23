@@ -1,7 +1,4 @@
-import 'core-js/es/string/starts-with'
-import 'core-js/es/string/repeat'
-import 'core-js/es/math/cbrt'
-import 'core-js/es/object/values'
+import '@babel/polyfill'
 
 import Vue from 'vue'
 import App from './App.vue'
