@@ -1,3 +1,7 @@
+### v20
+Changes:
+* IE11 support.
+
 ### v19
 Changes:
 * Mobile navigation drawer now appears from the bottom.
