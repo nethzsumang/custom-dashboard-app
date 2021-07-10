@@ -19,6 +19,10 @@
           v-if="cardData.type === CARD_TYPES.DATETIME"
           :cardData="cardData"
           :currentStep="currentStep" />
+        <CardContentQuotes
+          v-if="cardData.type === CARD_TYPES.QUOTES"
+          :cardData="cardData"
+          :currentStep="currentStep" />
         <v-card-actions v-if='$store.state.editCardToggle && previewOnly === false'>
           <div class="d-flex justify-center">
             <v-btn
@@ -43,6 +47,7 @@ import CardContentCustom from './card-types/card-content-custom'
 import CardContentWeather from './card-types/card-content-weather'
 import CardContentCarousel from './card-types/card-content-carousel'
 import CardContentDatetime from './card-types/card-content-datetime'
+import CardContentQuotes from './card-types/card-content-quotes'
 import { CARD_TYPES } from '../constants/app-constants'
 import _ from 'lodash'
 
@@ -52,7 +57,8 @@ export default {
     CardContentCustom,
     CardContentWeather,
     CardContentCarousel,
-    CardContentDatetime
+    CardContentDatetime,
+    CardContentQuotes
   },
   props: {
     cardData: {
