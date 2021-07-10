@@ -8,7 +8,8 @@ const CARD_TYPES = {
   CUSTOM: 'Custom',
   WEATHER: 'Weather',
   PICTURE_CAROUSEL: 'Picture Carousel',
-  DATETIME: 'Datetime'
+  DATETIME: 'Datetime',
+  QUOTES: 'Quotes'
   // DATA_TABLE: 'Data Table'
 }
 
@@ -72,6 +73,11 @@ const DATETIME_OPTIONS = {
   ]
 }
 
+/**
+ * API Endpoint of Quotes
+ */
+const QUOTE_API_ENDPOINT = 'https://api.quotable.io/random'
+
 export {
   LOCAL_STORAGE_DASHBOARD_DATA_KEY,
   CARD_TYPES,
@@ -79,5 +85,6 @@ export {
   DEFAULT_CARD_DATA,
   DEFAULT_DASHBOARD_DATA,
   WEATHER_SOURCES,
-  DATETIME_OPTIONS
+  DATETIME_OPTIONS,
+  QUOTE_API_ENDPOINT
 }
