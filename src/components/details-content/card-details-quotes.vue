@@ -57,7 +57,7 @@ export default {
   methods: {
     async getTags () {
       try {
-        const { data } = await axios.get('http://api.quotable.io/tags')
+        const { data } = await axios.get('https://api.quotable.io/tags')
         this.items = _.sortBy(data, 'quoteCount').reverse()
       } catch (e) {
         console.error(e)
