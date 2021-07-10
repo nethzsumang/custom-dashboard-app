@@ -2,7 +2,7 @@
   <div>
     <v-container fluid>
       <div
-        v-if="oDashboardData.cards.length === 0"
+        v-if="cards.length === 0"
         class="d-flex justify-center">
         <v-container fluid>
           <v-row>
@@ -17,80 +17,29 @@
           </v-row>
         </v-container>
       </div>
-      <v-row v-for="card in oDashboardData.cards"
-        :key="card.name">
-        <v-col>
-          <DashboardCard :cardData="card" />
-        </v-col>
-      </v-row>
+      <draggable
+        :list="cards"
+        v-bind="dragOptions">
+        <div
+          v-for="card in cards"
+          :key="card.name">
+          <v-row>
+            <v-col>
+              <DashboardCard :cardData="card" />
+            </v-col>
+          </v-row>
+        </div>
+      </draggable>
     </v-container>
     <div class="d-flex justify-center">
       <DashboardAddNewCardDialog />
     </div>
-    <v-speed-dial
-      v-model="speedDial"
-      fixed
-      bottom
-      right
-      direction="top"
-      :open-on-hover="false"
-      transition="slide-y-reverse-transition"
-    >
-      <template v-slot:activator>
-        <v-btn
-          v-model="speedDial"
-          color="blue darken-2"
-          dark
-          fab >
-          <v-icon v-if="speedDial">
-            mdi-close
-          </v-icon>
-          <v-icon v-else>
-            mdi-database
-          </v-icon>
-        </v-btn>
-      </template>
-
-      <v-btn
-        fab
-        dark
-        color="secondary"
-        @click="editCards">
-        <v-icon>mdi-square-edit-outline</v-icon>
-      </v-btn>
-
-      <v-btn
-        fab
-        dark
-        color="primary"
-        @click='saveDashboardData'>
-        <v-icon>mdi-content-save</v-icon>
-      </v-btn>
-
-      <v-btn
-        fab
-        dark
-        color="primary"
-        @click='downloadDashboardData'>
-        <v-icon>mdi-download</v-icon>
-      </v-btn>
-
-      <v-btn
-        fab
-        dark
-        color="primary"
-        @click='syncToCloud'>
-        <v-icon>mdi-cloud-sync</v-icon>
-      </v-btn>
-
-      <v-btn
-        fab
-        dark
-        color="danger"
-        @click='removeDashboardData'>
-        <v-icon>mdi-trash-can</v-icon>
-      </v-btn>
-    </v-speed-dial>
+    <DashboardSpeedDial
+      :editCards="editCards"
+      :saveDashboardData="saveDashboardData"
+      :downloadDashboardData="downloadDashboardData"
+      :syncToCloud="syncToCloud"
+      :removeDashboardData="removeDashboardData" />
   </div>
 </template>
 
@@ -98,43 +47,51 @@
 import _ from 'lodash'
 import DashboardCard from '../components/dashboard-card'
 import DashboardAddNewCardDialog from '../components/dashboard-add-new-card-dialog'
+import DashboardSpeedDial from '../components/dashboard-speed-dial'
 import { saveData, removeDashboardData } from '../libraries/dashboard-data'
+import draggable from 'vuedraggable'
 
 export default {
   name: 'Dashboard',
   components: {
     DashboardCard,
-    DashboardAddNewCardDialog
+    DashboardAddNewCardDialog,
+    DashboardSpeedDial,
+    draggable
   },
   data () {
     return {
-      oDashboardData: {},
-      speedDial: false,
       downloadButtonHref: ''
     }
   },
-  watch: {
-    $route: {
-      handler: function (newValue) {
-        this.oDashboardData = this.getDashboardData(newValue)
+  computed: {
+    dragOptions () {
+      return {
+        disabled: !this.$store.state.editCardToggle
+      }
+    },
+    cards: {
+      get () {
+        const oDashboardData = this.$store.state.data
+        const oFilteredData = _.find(oDashboardData, (oValue) => {
+          return oValue.path === this.$route.path
+        })
+        return oFilteredData.cards
       },
-      deep: true
+      set (aCards) {
+        let oDashboardData = this.$store.state.data
+        oDashboardData = _.map(oDashboardData, (oValue) => {
+          if (oValue.path === this.$route.path) {
+            oValue.cards = aCards
+          }
+          return oValue
+        })
+
+        this.$store.dispatch('setDashboardData', oDashboardData)
+      }
     }
   },
-  created () {
-    this.oDashboardData = this.getDashboardData(this.$route)
-  },
   methods: {
-    /**
-     * Gets dashboard data
-     * @return object
-     */
-    getDashboardData (oRoute) {
-      const aDashboardData = this.$store.state.data
-      return _.find(aDashboardData, (oValue) => {
-        return oValue.path === oRoute.path
-      })
-    },
     /**
      * Save dashboard data
      */
@@ -180,6 +137,7 @@ export default {
      * Sets edit card toggle
      */
     editCards () {
+      this.dragOptions.disabled = false
       this.$store.dispatch('setEditCardToggle', true)
     },
     /**
