@@ -2,8 +2,8 @@
     <div>
       <v-dialog
         v-model="dialogState"
-        width="800"
-      >
+        width="800">
+
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             elevation="2"
@@ -21,64 +21,26 @@
           <v-card-text>
             <v-stepper v-model="step">
               <v-stepper-header>
-                <v-stepper-step :step="1" editable>
-                  Common Settings
-                </v-stepper-step>
+                <v-stepper-step :step="1" editable> Common Settings </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step :step="2" editable>
-                  Edit Details
-                </v-stepper-step>
+                <v-stepper-step :step="2" editable> Edit Details </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step :step="3" editable>
-                  Preview
-                </v-stepper-step>
+                <v-stepper-step :step="3" editable> Preview </v-stepper-step>
               </v-stepper-header>
 
               <v-stepper-content :step="1">
-                <v-text-field
-                  v-model="cardTitle"
-                  label="Card Title"
-                ></v-text-field>
-
-                <v-text-field
-                  v-model="cardSubtitle"
-                  label="Card Subtitle"
-                ></v-text-field>
-
-                <v-select
-                  :items="cardTypeList"
-                  v-model="cardType"
-                  label="Card Type">
-                </v-select>
+                <CommonSettings />
               </v-stepper-content>
 
               <v-stepper-content :step="2">
-                <CardDetailsCustom v-if="cardType === cardTypes.CUSTOM" />
-                <CardDetailsWeather v-if="cardType === cardTypes.WEATHER" />
-                <CardDetailsCarousel v-if="cardType === cardTypes.PICTURE_CAROUSEL" />
-                <CardDetailsDatetime v-if="cardType === cardTypes.DATETIME" />
-                <CardDetailsQuotes v-if="cardType === cardTypes.QUOTES" />
+                <CustomSettings />
               </v-stepper-content>
 
               <v-stepper-content :step="3">
-                <h3 class="mb-3"> Preview </h3>
-                <DashboardCard
-                  :cardData='$store.state.createCardData'
-                  :previewOnly='true'
-                  :currentStep='step' />
-                <div class="d-flex justify-center mt-3">
-                  <v-btn
-                    color="danger"
-                    class="mr-5"
-                    @click='resetCreateCardData'>
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                    color="primary"
-                    @click='saveCreateCardData'>
-                    Save
-                  </v-btn>
-                </div>
+                <CardPreview
+                  :step="step"
+                  @saveCreateCardData="saveCreateCardData"
+                  @resetCreateCardData="resetCreateCardData" />
               </v-stepper-content>
             </v-stepper>
           </v-card-text>
@@ -89,28 +51,21 @@
 
 <script>
 import { CARD_TYPES, DEFAULT_CARD_DATA } from '../constants/app-constants'
-import DashboardCard from '../components/dashboard-card'
-import CardDetailsCustom from './details-content/card-details-custom'
-import CardDetailsWeather from './details-content/card-details-weather'
-import CardDetailsCarousel from './details-content/card-details-carousel'
-import CardDetailsDatetime from './details-content/card-details-datetime'
-import CardDetailsQuotes from './details-content/card-details-quotes'
+import CommonSettings from './card-dialog-steps/common-settings'
+import CustomSettings from './card-dialog-steps/custom-settings'
+import CardPreview from './card-dialog-steps/card-preview.vue'
 import _ from 'lodash'
 
 export default {
   name: 'DashboardAddNewCardDialog',
   components: {
-    DashboardCard,
-    CardDetailsCustom,
-    CardDetailsWeather,
-    CardDetailsCarousel,
-    CardDetailsDatetime,
-    CardDetailsQuotes
+    CommonSettings,
+    CustomSettings,
+    CardPreview
   },
   data () {
     return {
       step: 1,
-      cardTypeList: Object.values(CARD_TYPES),
       cardTypes: CARD_TYPES
     }
   },
@@ -121,39 +76,6 @@ export default {
       },
       set (bToggle) {
         this.$store.dispatch('setEditDialogToggle', bToggle)
-      }
-    },
-    cardTitle: {
-      get () {
-        return this.$store.state.createCardData.title
-      },
-      set (sTitle) {
-        this.$store.dispatch('setCreateCardData', {
-          ...this.$store.state.createCardData,
-          title: sTitle
-        })
-      }
-    },
-    cardSubtitle: {
-      get () {
-        return this.$store.state.createCardData.subtitle
-      },
-      set (sSubtitle) {
-        this.$store.dispatch('setCreateCardData', {
-          ...this.$store.state.createCardData,
-          subtitle: sSubtitle
-        })
-      }
-    },
-    cardType: {
-      get () {
-        return this.$store.state.createCardData.type
-      },
-      set (sType) {
-        this.$store.dispatch('setCreateCardData', {
-          ...this.$store.state.createCardData,
-          type: sType
-        })
       }
     }
   },
@@ -177,9 +99,9 @@ export default {
         if (sCurrentRoute === oValue.path) {
           if (this.$store.state.cardIdToEdit === null) {
             oValue.cards.push({
-              title: this.cardTitle,
-              subtitle: this.cardSubtitle,
-              type: this.cardType,
+              title: this.$store.state.createCardData.title,
+              subtitle: this.$store.state.createCardData.subtitle,
+              type: this.$store.state.createCardData.type,
               content: this.$store.state.createCardData.content,
               id: oValue.cards.length + 1,
               dataSource: this.$store.state.createCardData.dataSource

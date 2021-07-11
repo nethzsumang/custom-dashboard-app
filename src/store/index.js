@@ -8,6 +8,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     routes: [],
+    expandedDrawer: false,
     data: loadInitialData(),
     createCardData: { ...DEFAULT_CARD_DATA },
     createDashboardData: { ...DEFAULT_DASHBOARD_DATA },
@@ -19,6 +20,9 @@ export default new Vuex.Store({
   mutations: {
     setRoutes (state, aRoutes) {
       Vue.set(state, 'routes', aRoutes)
+    },
+    setExpandedDrawer (state, bIsExpanded) {
+      this.state.expandedDrawer = bIsExpanded
     },
     setDashboardData (state, oData) {
       Vue.set(state, 'data', oData)
@@ -45,6 +49,9 @@ export default new Vuex.Store({
   actions: {
     setRoutes ({ commit }, aRoutes) {
       commit('setRoutes', aRoutes)
+    },
+    setExpandedDrawer ({ commit }, bIsExpanded) {
+      commit('setExpandedDrawer', bIsExpanded)
     },
     setDashboardData ({ commit }, oData) {
       commit('setDashboardData', oData)
